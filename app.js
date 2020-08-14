@@ -4,6 +4,7 @@ const PORT = 3000;
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
 const events = [];
+const mongoose = require("mongoose");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Note: ! in garaphQL this means null is not allowed
@@ -59,6 +60,17 @@ app.use(
     graphiql: true,
   })
 );
-app.listen(PORT, () => {
-  console.log(`app is listening on Port ${PORT}`);
-});
+
+mongoose
+  .connect("mongodb://localhost/graphql_events", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`app is listening on Port ${PORT}`);
+    });
+  })
+  .catch((err) => console.log(err));
