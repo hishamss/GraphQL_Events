@@ -3,8 +3,8 @@ const app = express();
 const PORT = 3000;
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
-const events = [];
 const mongoose = require("mongoose");
+const Event = require("./models/events");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Note: ! in garaphQL this means null is not allowed
@@ -41,20 +41,28 @@ app.use(
     // Resolver
     rootValue: {
       events: () => {
-        return events;
+        return Event.find()
+          .then((result) => {
+            return result.map((row) => {
+              return { ...row._doc, _id: row._doc._id.toString() };
+            });
+          })
+          .catch((err) => {
+            throw err;
+          });
       },
       createEvent: (args) => {
-        const event = {
-          _id: Math.random().toString(),
+        return Event.create({
           title: args.eventInput.title,
           description: args.eventInput.description,
-          // to make sure whatever I type will converted to number
           price: +args.eventInput.price,
-          data: args.eventInput.data,
-        };
-
-        events.push(event);
-        return event;
+          date: new Date(args.eventInput.date),
+        })
+          .then((result) => {
+            console.log(result);
+            return { ...result._doc, _id: result._doc._id.toString() };
+          })
+          .catch((err) => console.log(err));
       },
     },
     graphiql: true,

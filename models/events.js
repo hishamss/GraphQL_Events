@@ -19,5 +19,5 @@ const eventSchema = new Schema({
     required: true,
   },
 });
-
+// Export the model to app.js
 module.exports = mongoose.model("event", eventSchema);
