@@ -70,11 +70,22 @@ app.use(
           description: args.eventInput.description,
           price: +args.eventInput.price,
           date: new Date(args.eventInput.date),
+          creator: "5f371e5b4d07a27630b64c64",
         })
           .then((result) => {
-            console.log(result);
-            // between the following curly braces is recommended from mongoDB to convert the id to string
-            return { ...result._doc, _id: result._doc._id.toString() };
+            return db.Users.findOneAndUpdate(
+              { _id: "5f371e5b4d07a27630b64c64" },
+              //   Note: mongoose will only get the id of the new added event object and push it to createdEvents array
+              { $push: { createdEvents: result } }
+            )
+              .then(() => {
+                // between the following curly braces is recommended from mongoDB to convert the id to string
+                return { ...result._doc, _id: result._doc._id.toString() };
+              })
+
+              .catch((err) => {
+                throw err;
+              });
           })
           .catch((err) => console.log(err));
       },
