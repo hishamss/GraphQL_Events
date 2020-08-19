@@ -31,19 +31,20 @@ module.exports = {
       throw err;
     }
   },
-  bookings: async() => {
+  bookings: async () => {
     try {
-      var results = await db.Booking.find();
-      return results.map(booking => {
-        return {...booking._doc,
-        createdAt: new date(booking._doc.createdAt).toISOString(),
-        updatedAt: new date(booking._doc.updatedAt).toISOString()
-      }
-      })
-    } catch(err) {
+      var results = await db.Booking.find().populate("event").populate("user");
+      return results.map((booking) => {
+        return {
+          ...booking._doc,
+          createdAt: new Date(booking._doc.createdAt).toISOString(),
+          updatedAt: new Date(booking._doc.updatedAt).toISOString(),
+        };
+      });
+    } catch (err) {
       throw err;
     }
-  }
+  },
   createEvent: async (args) => {
     try {
       var result = await db.Events.create({
@@ -70,6 +71,26 @@ module.exports = {
       }
     } catch (err) {
       console.log(err);
+    }
+  },
+  bookEvent: async (args) => {
+    try {
+      let Event = await db.Events.findOne({ _id: args.eventId });
+      try {
+        let result = await db.Booking.create({
+          event: Event,
+          user: "5f3c851b0caaca90b81fb296",
+        });
+        return {
+          ...result._doc,
+          createdAt: new Date(result._doc.createdAt).toISOString(),
+          updatedAt: new Date(result._doc.updatedAt).toISOString(),
+        };
+      } catch (err) {
+        throw err;
+      }
+    } catch (err) {
+      throw err;
     }
   },
   createUser: async (args) => {
