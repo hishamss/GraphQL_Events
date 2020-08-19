@@ -31,6 +31,19 @@ module.exports = {
       throw err;
     }
   },
+  bookings: async() => {
+    try {
+      var results = await db.Booking.find();
+      return results.map(booking => {
+        return {...booking._doc,
+        createdAt: new date(booking._doc.createdAt).toISOString(),
+        updatedAt: new date(booking._doc.updatedAt).toISOString()
+      }
+      })
+    } catch(err) {
+      throw err;
+    }
+  }
   createEvent: async (args) => {
     try {
       var result = await db.Events.create({
