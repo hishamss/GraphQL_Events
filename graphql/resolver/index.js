@@ -93,6 +93,16 @@ module.exports = {
       throw err;
     }
   },
+  cancelBooking: async (args) => {
+    try {
+      let result = await db.Booking.deleteOne({
+        _id: args.bookingId,
+      });
+      return "Deleted";
+    } catch (err) {
+      throw err;
+    }
+  },
   createUser: async (args) => {
     try {
       let hashedPassword = await bcrypt.hash(args.userInput.password, 12);
