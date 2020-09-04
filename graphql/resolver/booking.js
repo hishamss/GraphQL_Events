@@ -14,13 +14,14 @@ module.exports = {
       throw err;
     }
   },
-  bookEvent: async (args) => {
+  bookEvent: async (args, req) => {
+    if (!req.isAuth) throw new Error("not Authenticated!!");
     try {
       let Event = await db.Events.findOne({ _id: args.eventId });
       try {
         let result = await db.Booking.create({
           event: Event,
-          user: "5f3c851b0caaca90b81fb296",
+          user: req.userId,
         });
         return {
           ...result._doc,

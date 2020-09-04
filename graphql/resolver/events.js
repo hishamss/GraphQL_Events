@@ -18,14 +18,15 @@ module.exports = {
       throw err;
     }
   },
-  createEvent: async (args) => {
+  createEvent: async (args, req) => {
+    if (!req.isAuth) throw new Error("Not Authenticated!!");
     try {
       var result = await db.Events.create({
         title: args.eventInput.title,
         description: args.eventInput.description,
         price: +args.eventInput.price,
         date: new Date(args.eventInput.date),
-        creator: "5f51cb12884779589862f265",
+        creator: req.userId,
       });
       try {
         var userResult = await db.Users.findOneAndUpdate(
