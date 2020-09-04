@@ -1,6 +1,7 @@
 const db = require("../../models");
 module.exports = {
-  events: async () => {
+  events: async (args, req) => {
+    if (!req.isAuth) throw new Error("Not Authenticated!!");
     try {
       let results = await db.Events.find().populate("creator");
       return results.map((row) => {
