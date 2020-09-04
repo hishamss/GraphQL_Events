@@ -5,8 +5,10 @@ const { graphqlHTTP } = require("express-graphql");
 const mongoose = require("mongoose");
 const graphQlSchema = require("./graphql/schema");
 const graphQlResolvers = require("./graphql/resolver");
+const isAuth = require("./middlewares/is-auth");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(isAuth);
 // Note: ! in garaphQL this means null is not allowed
 app.use(
   "/graphql",
