@@ -8,9 +8,11 @@ import {
 import LoginPage from "./pages/login";
 import EventsPage from "./pages/events";
 import BookingPage from "./pages/booking";
+import MainNavigation from "./components/Navigation/MainNavigation";
 function App() {
   return (
     <Router>
+      <MainNavigation />
       <Switch>
         <Redirect from="/" to="/auth" exact />
         <Route exact path="/auth" component={LoginPage} />
