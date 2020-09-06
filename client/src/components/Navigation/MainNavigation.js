@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import "./style.css";
 function mainNavigation() {
   return (
-    <header>
+    <header className="mainNavigation">
       <div className="mainNavigationLogo">
         <h1>GoEvents</h1>
       </div>

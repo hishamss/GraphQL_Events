@@ -1,4 +1,5 @@
 import React from "react";
+import "./app.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,13 +14,15 @@ function App() {
   return (
     <Router>
       <MainNavigation />
-      <Switch>
-        <Redirect from="/" to="/auth" exact />
-        <Route exact path="/auth" component={LoginPage} />
-        <Route exact path="/events" component={EventsPage} />
-        <Route exact path="/booking" component={BookingPage} />
-        <Route path="/" component={LoginPage} />
-      </Switch>
+      <main className="mainContainer">
+        <Switch>
+          <Redirect from="/" to="/auth" exact />
+          <Route exact path="/auth" component={LoginPage} />
+          <Route exact path="/events" component={EventsPage} />
+          <Route exact path="/booking" component={BookingPage} />
+          <Route path="/" component={LoginPage} />
+        </Switch>
+      </main>
     </Router>
   );
 }

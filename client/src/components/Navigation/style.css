@@ -1,0 +1,46 @@
+.mainNavigation {
+  background: #3a86ff;
+  height: 3.5rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.mainNavigationLogo h1 {
+  color: white;
+  font-size: 2.5rem;
+}
+
+.MainNavigationItems {
+  margin-left: auto;
+  margin-right: 1rem;
+}
+.MainNavigationItems ul {
+  list-style: none;
+  display: flex;
+}
+
+.MainNavigationItems li {
+  margin: 0 0.5rem;
+}
+
+/* Navlink in React will render a tag */
+.MainNavigationItems a {
+  text-decoration: none;
+  font-size: 1.7rem;
+  color: white !important;
+}
+
+.MainNavigationItems a:hover,
+.MainNavigationItems a:active {
+  color: #ffbe0b !important;
+  font-weight: bold;
+}
+
+.MainNavigationItems a.active {
+  color: #ffbe0b !important;
+}
