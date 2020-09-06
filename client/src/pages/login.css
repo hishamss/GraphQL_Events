@@ -1,0 +1,40 @@
+.authFormContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.authForm {
+  width: 400px;
+  max-width: 80%;
+}
+
+.authForm button {
+  background: #8338ec;
+  color: white;
+  margin-right: 1rem;
+  border-radius: 1rem;
+  box-shadow: 10px 10px 5px #888888;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
+.form-control {
+  margin-bottom: 1rem;
+}
+
+.form-control label {
+  font-size: 1.2rem;
+}
+
+.form-control input {
+  display: block;
+  width: 100%;
+  height: 1.5rem;
+}
+
+.authForm button:hover,
+.authForm button:active {
+  background: #6c17e4;
+}
