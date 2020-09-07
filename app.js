@@ -20,6 +20,9 @@ app.use(
   })
 );
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 mongoose
   .connect("mongodb://localhost/graphql_events", {
     useNewUrlParser: true,

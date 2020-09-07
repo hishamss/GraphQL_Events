@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { createUser } from "../API";
 import "./login.css";
 
 function LoginPage() {
@@ -12,9 +13,39 @@ function LoginPage() {
     const Password = passwordRef.current.value.trim();
     if (!Email || !Password || !/@/.exec(Email)) {
       setMessage("Missing Email/password Or Invalid Email");
-    } else {
-      setMessage("Submitted");
+      return;
     }
+    const requestBody = {
+      query: `
+      mutation {
+        createUser(userInput: {email: "${Email}", password: "${Password}"}){
+          _id
+          email
+        }
+      }
+      `,
+    };
+    createUser(requestBody)
+      .then((response) => {
+        console.log("status", response.status, typeof response.status);
+        if (response.status !== 200 && response.status !== 201) {
+          setMessage("Smth Went Wrong!!");
+          throw new Error("smth went wrong!!");
+        }
+        return response.json();
+      })
+      .then((result) => {
+        if ("errors" in result) {
+          if (result["errors"]["0"]["message"].includes("Already Exists"))
+            setMessage("User Already Exists");
+        } else {
+          setMessage("Submitted");
+        }
+      })
+      .catch((err) => {
+        setMessage("Smth Went Wrong!!");
+        console.log(err);
+      });
   };
   return (
     <div className="authFormContainer">
