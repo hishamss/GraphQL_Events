@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 const { graphqlHTTP } = require("express-graphql");
 const mongoose = require("mongoose");
 const graphQlSchema = require("./graphql/schema");
