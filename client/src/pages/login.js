@@ -6,7 +6,11 @@ function LoginPage() {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const [message, setMessage] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
 
+  const handleSwitch = () => {
+    setIsLogin((prevState) => !prevState);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const Email = emailRef.current.value.trim();
@@ -15,8 +19,20 @@ function LoginPage() {
       setMessage("Missing Email/password Or Invalid Email");
       return;
     }
-    const requestBody = {
+    let requestBody = {
       query: `
+      query {
+        login(email: "${Email}", password: "${Password}"){
+        userId
+        token
+        tokenExpiration
+        }
+      }
+      `,
+    };
+    if (!isLogin) {
+      requestBody = {
+        query: `
       mutation {
         createUser(userInput: {email: "${Email}", password: "${Password}"}){
           _id
@@ -24,10 +40,11 @@ function LoginPage() {
         }
       }
       `,
-    };
+      };
+    }
     createUser(requestBody)
       .then((response) => {
-        console.log("status", response.status, typeof response.status);
+        console.log("status", response);
         if (response.status !== 200 && response.status !== 201) {
           setMessage("Smth Went Wrong!!");
           throw new Error("smth went wrong!!");
@@ -36,8 +53,14 @@ function LoginPage() {
       })
       .then((result) => {
         if ("errors" in result) {
-          if (result["errors"]["0"]["message"].includes("Already Exists"))
+          let errorMessage = result["errors"]["0"]["message"];
+          if (errorMessage.includes("Already Exists"))
             setMessage("User Already Exists");
+          else if (
+            errorMessage.includes("User doesn't exists!!") ||
+            errorMessage.includes("Password is incorrect!!")
+          )
+            setMessage("Invalid Email/Password");
         } else {
           setMessage("Submitted");
         }
@@ -71,7 +94,9 @@ function LoginPage() {
           ></input>
         </div>
         <button type="submit">Submit</button>
-        <button type="button">Switch to Singup</button>
+        <button type="button" onClick={handleSwitch}>
+          Switch to {isLogin ? "Signup" : "Login"}
+        </button>
         <p>{message}</p>
       </form>
     </div>

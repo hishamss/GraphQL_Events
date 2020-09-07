@@ -8,7 +8,7 @@ module.exports = {
       if (!user) throw new Error("User doesn't exists!!");
       try {
         const isEqual = await bcrypt.compare(password, user.password);
-        if (!isEqual) throw new Error("Password is incorrect!!");
+        if (!isEqual) throw "Password is incorrect!!";
         // Genera JWT token
         const token = jwt.sign(
           { userId: user.id, email: user.email }, // user.id is the same as user._id but converted to string
