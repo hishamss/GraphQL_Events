@@ -1,10 +1,12 @@
 import React, { useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { setToken } from "../actions";
 import { useDispatch } from "react-redux";
 import { createUser } from "../API";
 import "./login.css";
 
 function LoginPage() {
+  const history = useHistory();
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const [message, setMessage] = useState("");
@@ -62,10 +64,13 @@ function LoginPage() {
             errorMessage.includes("User doesn't exists!!") ||
             errorMessage.includes("Password is incorrect!!")
           )
-            setMessage("Invalid Email/Password");
+            setMessage("Incorrect Email/Password");
         } else {
           setMessage("Submitted");
-          if (isLogin) dispatch(setToken(result["data"]["login"]["userId"]));
+          if (isLogin) {
+            dispatch(setToken(result["data"]["login"]["userId"]));
+            history.push("/events");
+          }
         }
       })
       .catch((err) => {

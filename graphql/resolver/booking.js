@@ -1,6 +1,7 @@
 const db = require("../../models");
 module.exports = {
   bookings: async () => {
+    if (!req.isAuth) throw new Error("not Authenticated!!");
     try {
       var results = await db.Booking.find().populate("event").populate("user");
       return results.map((booking) => {
@@ -36,6 +37,7 @@ module.exports = {
     }
   },
   cancelBooking: async (args) => {
+    if (!req.isAuth) throw new Error("not Authenticated!!");
     try {
       let result = await db.Booking.deleteOne({
         _id: args.bookingId,

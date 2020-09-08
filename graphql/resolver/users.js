@@ -2,6 +2,7 @@ const db = require("../../models");
 const bcrypt = require("bcrypt");
 module.exports = {
   users: async () => {
+    if (!req.isAuth) throw new Error("not Authenticated!!");
     try {
       let result = await db.Users.find().populate("createdEvents");
       return result.map((row) => {
