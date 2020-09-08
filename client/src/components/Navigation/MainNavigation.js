@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { getToken } from "../../actions";
 import { NavLink } from "react-router-dom";
 import "./style.css";
 function MainNavigation() {
@@ -15,12 +14,16 @@ function MainNavigation() {
           <li>
             <NavLink to="/auth">Login</NavLink>
           </li>
-          <li>
-            <NavLink to="/events">Events</NavLink>
-          </li>
-          <li>
-            <NavLink to="/bookings">Booking</NavLink>
-          </li>
+          {token && (
+            <li>
+              <NavLink to="/events">Events</NavLink>
+            </li>
+          )}
+          {token && (
+            <li>
+              <NavLink to="/bookings">Booking</NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
