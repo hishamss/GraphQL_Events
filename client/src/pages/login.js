@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import { setToken } from "../actions";
+import { useDispatch } from "react-redux";
 import { createUser } from "../API";
 import "./login.css";
 
@@ -7,7 +9,7 @@ function LoginPage() {
   const passwordRef = useRef("");
   const [message, setMessage] = useState("");
   const [isLogin, setIsLogin] = useState(true);
-
+  const dispatch = useDispatch();
   const handleSwitch = () => {
     setIsLogin((prevState) => !prevState);
   };
@@ -63,6 +65,7 @@ function LoginPage() {
             setMessage("Invalid Email/Password");
         } else {
           setMessage("Submitted");
+          if (isLogin) dispatch(setToken(result["data"]["login"]["userId"]));
         }
       })
       .catch((err) => {
