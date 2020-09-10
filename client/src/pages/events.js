@@ -10,9 +10,7 @@ function EventsPage() {
         </button>
       </div>
       <div
-        className={
-          showModal ? "modalContainer showModal" : " modalContainer hideModal"
-        }
+        className={"modalContainer" + (showModal ? " showModal" : " hideModal")}
       >
         <div className="modal">
           <div className="modalHeader">
