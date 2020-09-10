@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import "./events.css";
 function EventsPage() {
-  const [hideModal, setHideModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
       <div className="eventsContainer">
-        <button id="createEvent" onClick={() => setHideModal(false)}>
+        <button id="createEvent" onClick={() => setShowModal(true)}>
           Add Event
         </button>
       </div>
       <div
         className={
-          hideModal ? "modalContainer hideModal" : " modalContainer showModal"
+          showModal ? "modalContainer showModal" : " modalContainer hideModal"
         }
       >
         <div className="modal">
@@ -21,7 +21,7 @@ function EventsPage() {
           <div className="modalBody">
             <p>content</p>
             <button>Submit</button>
-            <button onClick={() => setHideModal(true)}>Cancel</button>
+            <button onClick={() => setShowModal(false)}>Cancel</button>
           </div>
         </div>
       </div>
