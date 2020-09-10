@@ -1,8 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../actions";
 import { NavLink } from "react-router-dom";
 import "./style.css";
 function MainNavigation() {
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.tokenReducer);
   return (
     <header className="mainNavigation">
@@ -11,9 +13,6 @@ function MainNavigation() {
       </div>
       <nav className="MainNavigationItems">
         <ul>
-          <li>
-            <NavLink to="/auth">Login</NavLink>
-          </li>
           {token && (
             <li>
               <NavLink to="/events">Events</NavLink>
@@ -22,6 +21,13 @@ function MainNavigation() {
           {token && (
             <li>
               <NavLink to="/bookings">Booking</NavLink>
+            </li>
+          )}
+          {token && (
+            <li>
+              <NavLink to="/" onClick={() => dispatch(logout())}>
+                Logout
+              </NavLink>
             </li>
           )}
         </ul>

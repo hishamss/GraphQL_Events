@@ -4,3 +4,9 @@ export const setToken = (token) => {
     payload: token,
   };
 };
+
+export const logout = () => {
+  return {
+    type: "logout",
+  };
+};

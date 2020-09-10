@@ -80,6 +80,7 @@ function LoginPage() {
   };
   return (
     <div className="authFormContainer">
+      <h1>{isLogin ? "Login" : "Signup"}</h1>
       <form onSubmit={handleSubmit} className="authForm">
         <div className="form-control">
           <label htmlFor="email">Email</label>
