@@ -14,12 +14,16 @@ function EventsPage() {
       >
         <div className="modal">
           <div className="modalHeader">
-            <h1>Add Events</h1>
+            <h3>Add Events</h3>
           </div>
           <div className="modalBody">
-            <p>content</p>
-            <button>Submit</button>
-            <button onClick={() => setShowModal(false)}>Cancel</button>
+            <div className="modalContent">
+              <p>Content</p>
+            </div>
+            <div className="modalButtons">
+              <button>Submit</button>
+              <button onClick={() => setShowModal(false)}>Cancel</button>
+            </div>
           </div>
         </div>
       </div>

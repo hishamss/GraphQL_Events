@@ -37,12 +37,14 @@
 .modalHeader {
   background: #3a86ff;
   height: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.modalHeader h1 {
+.modalHeader h3 {
   color: white;
-  padding: 0;
-  margin: 0;
+  padding: 0.5rem;
 }
 
 .hideModal {
@@ -51,4 +53,28 @@
 
 .showModal {
   display: auto;
+}
+
+.modalBody {
+  height: 8rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.modalContent {
+  margin-right: auto;
+}
+
+.modalButtons button {
+  margin: 1rem;
+  background: #8338ec;
+  color: white;
+  margin-right: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 5px #888888;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem 0.5rem;
 }
