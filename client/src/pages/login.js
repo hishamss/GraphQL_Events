@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import { setToken } from "../actions";
+import { setToken, setEmail } from "../actions";
 import { useDispatch } from "react-redux";
 import { createUser } from "../API";
 import "./login.css";
@@ -28,6 +28,7 @@ function LoginPage() {
       query {
         login(email: "${Email}", password: "${Password}"){
         userId
+        email
         token
         tokenExpiration
         }
@@ -68,7 +69,9 @@ function LoginPage() {
         } else {
           setMessage("Submitted");
           if (isLogin) {
-            dispatch(setToken(result["data"]["login"]["userId"]));
+            console.log("login successfully", result);
+            dispatch(setToken(result["data"]["login"]["token"]));
+            dispatch(setEmail(result["data"]["login"]["email"]));
             history.push("/events");
           }
         }

@@ -21,6 +21,7 @@ type Event {
 
 type AuthData {
     userId: ID!
+    email: String!
     token: String!
     tokenExpiration: Int!
 }

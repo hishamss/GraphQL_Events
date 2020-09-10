@@ -6,10 +6,11 @@ import "./style.css";
 function MainNavigation() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.tokenReducer);
+  const email = useSelector((state) => state.emailReducer);
   return (
     <header className="mainNavigation">
       <div className="mainNavigationLogo">
-        <h1>GoEvents({token})</h1>
+        <h1>GoEvents({email})</h1>
       </div>
       <nav className="MainNavigationItems">
         <ul>
