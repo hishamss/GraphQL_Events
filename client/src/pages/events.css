@@ -1,0 +1,54 @@
+.eventsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#createEvent {
+  margin: 1rem;
+  background: #8338ec;
+  color: white;
+  margin-right: 1rem;
+  border-radius: 1rem;
+  box-shadow: 10px 10px 5px #888888;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
+.modalContainer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  width: 30%;
+}
+
+.modalHeader {
+  background: #3a86ff;
+  height: 3rem;
+}
+
+.modalHeader h1 {
+  color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.hideModal {
+  display: none;
+}
+
+.showModal {
+  display: auto;
+}
