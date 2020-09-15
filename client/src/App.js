@@ -24,8 +24,8 @@ function App() {
             <Redirect from="/" to="/auth" exact />
           )}
           {!token && <Route exact path="/auth" component={LoginPage} />}
-          {/* {token && <Route exact path="/events" component={EventsPage} />} */}
-          <Route exact path="/events" component={EventsPage} />
+          {token && <Route exact path="/events" component={EventsPage} />}
+
           {token && <Route exact path="/bookings" component={BookingPage} />}
           {token ? (
             <Route path="/" component={EventsPage} />

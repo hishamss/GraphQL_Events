@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { setToken, setEmail } from "../actions";
 import { useDispatch } from "react-redux";
-import { createUser } from "../API";
+import { loginAuth0, userProfileAuth0 } from "../API";
 import "./login.css";
 
 function LoginPage() {
@@ -23,31 +23,38 @@ function LoginPage() {
       setMessage("Missing Email/password Or Invalid Email");
       return;
     }
+    // let requestBody = {
+    //   query: `
+    //   query {
+    //     login(email: "${Email}", password: "${Password}"){
+    //     userId
+    //     email
+    //     token
+    //     tokenExpiration
+    //     }
+    //   }
+    //   `,
+    // };
+    // if (!isLogin) {
+    //   requestBody = {
+    //     query: `
+    //   mutation {
+    //     createUser(userInput: {email: "${Email}", password: "${Password}"}){
+    //       _id
+    //       email
+    //     }
+    //   }
+    //   `,
+    //   };
+    // }
+
     let requestBody = {
-      query: `
-      query {
-        login(email: "${Email}", password: "${Password}"){
-        userId
-        email
-        token
-        tokenExpiration
-        }
-      }
-      `,
+      grant_type: "password",
+      client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+      username: Email,
+      password: Password,
     };
-    if (!isLogin) {
-      requestBody = {
-        query: `
-      mutation {
-        createUser(userInput: {email: "${Email}", password: "${Password}"}){
-          _id
-          email
-        }
-      }
-      `,
-      };
-    }
-    createUser(requestBody)
+    loginAuth0(process.env.REACT_APP_AUTH0_DOMAIN, requestBody)
       .then((response) => {
         console.log("status", response);
         if (response.status !== 200 && response.status !== 201) {
@@ -69,10 +76,24 @@ function LoginPage() {
         } else {
           setMessage("Submitted");
           if (isLogin) {
-            console.log("login successfully", result);
-            dispatch(setToken(result["data"]["login"]["token"]));
-            dispatch(setEmail(result["data"]["login"]["email"]));
-            history.push("/events");
+            console.log("login successfully", result["access_token"]);
+            if (result["access_token"]) {
+              dispatch(setToken(result["access_token"]));
+              userProfileAuth0(
+                process.env.REACT_APP_AUTH0_DOMAIN,
+                result["access_token"]
+              )
+                .then((response) => {
+                  return response.json();
+                })
+                .then((result) => {
+                  dispatch(setEmail(result["name"]));
+                  history.push("/events");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
           }
         }
       })
